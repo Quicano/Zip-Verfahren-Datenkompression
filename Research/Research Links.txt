@@ -1,7 +1,2 @@
 https://de.wikipedia.org/wiki/ZIP-Dateiformat
 https://de.wikipedia.org/wiki/Progressive_Kompression
-https://en.wikipedia.org/wiki/ZIP_(file_format)#File_headers
-https://de.wikipedia.org/wiki/7-Zip
-https://en.wikipedia.org/wiki/LZ77_and_LZ78
-https://www.informatik.gym-wst.de/de/qphase/codierung/zip
-https://de.wikibooks.org/wiki/Datenkompression:_Verlustfreie_Verfahren:_W%C3%B6rterbuchbasierte_Verfahren:_LZ77
