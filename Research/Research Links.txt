@@ -4,7 +4,10 @@ https://de.wikipedia.org/wiki/Progressive_Kompression
 https://de.wikipedia.org/wiki/LZ77
 https://de.wikibooks.org/wiki/Datenkompression:_Verlustfreie_Verfahren:_W%C3%B6rterbuchbasierte_Verfahren:_LZ77
 https://de.wikipedia.org/wiki/Datenkompression#W%C3%B6rterbuchmethode
+https://www.renefuerst.eu/wie-funktioniert-eigentlich-datenkomprimierung-fuer-zip-dateien-mp4-filme-videos-jpeg-bilder-mp3-musik/
+https://www.uni-trier.de/fileadmin/fb4/prof/INF/TIN/Folien/DK/ss_2013/vorlesung04.pdf
 
 Videos:
 https://www.youtube.com/watch?v=goOa3DGezUA
 https://www.youtube.com/watch?v=jVcTrBjI-eE&t=199s
+https://www.youtube.com/watch?v=XxXzjqK8aXI
