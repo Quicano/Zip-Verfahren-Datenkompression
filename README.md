@@ -9,5 +9,5 @@ ToDo:
 
 3. Demonstration Kid/Code
 
-Link zur Overleaf:
+Link zu Overleaf:
 https://de.overleaf.com/project/6360d89f8877103761ef5825
