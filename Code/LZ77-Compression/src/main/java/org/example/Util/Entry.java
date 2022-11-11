@@ -5,6 +5,7 @@ public class Entry {
     private int length;
     private char nextSymbol;
 
+    public Entry(){}
     public Entry(int offset, int length, char nextSymbol){
         this.offset = offset;
         this.length = length;
@@ -31,7 +32,7 @@ public class Entry {
         this.length = length;
     }
 
-    public void setNextSymbol(char nextSymbol) {
+    public void setNextSymbol(Character nextSymbol) {
         this.nextSymbol = nextSymbol;
     }
 }

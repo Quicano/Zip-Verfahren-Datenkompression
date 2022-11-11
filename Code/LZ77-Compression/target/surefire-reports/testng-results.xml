@@ -2,16 +2,16 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2022-11-11T18:01:45 MEZ" name="MatchFinderTest" finished-at="2022-11-11T18:01:45 MEZ" duration-ms="49">
+  <suite started-at="2022-11-11T18:58:36 MEZ" name="Command line suite" finished-at="2022-11-11T18:58:36 MEZ" duration-ms="50">
     <groups>
     </groups>
-    <test started-at="2022-11-11T18:01:45 MEZ" name="Command line test" finished-at="2022-11-11T18:01:45 MEZ" duration-ms="49">
-      <class name="MatchFinderTest">
-        <test-method signature="testExampleString()[pri:0, instance:MatchFinderTest@175c2241]" started-at="2022-11-11T18:01:45 MEZ" name="testExampleString" finished-at="2022-11-11T18:01:45 MEZ" duration-ms="3" status="PASS">
+    <test started-at="2022-11-11T18:58:36 MEZ" name="Command line test" finished-at="2022-11-11T18:58:36 MEZ" duration-ms="50">
+      <class name="UtilTest">
+        <test-method signature="newEntry()[pri:0, instance:UtilTest@489115ef]" started-at="2022-11-11T18:58:36 MEZ" name="newEntry" finished-at="2022-11-11T18:58:36 MEZ" duration-ms="6" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- testExampleString -->
-      </class> <!-- MatchFinderTest -->
+        </test-method> <!-- newEntry -->
+      </class> <!-- UtilTest -->
     </test> <!-- Command line test -->
-  </suite> <!-- MatchFinderTest -->
+  </suite> <!-- Command line suite -->
 </testng-results>

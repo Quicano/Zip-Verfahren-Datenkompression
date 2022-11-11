@@ -17,4 +17,8 @@ public class Dictionary {
     public void addEntry(Entry entry){
         dictionary.add(entry);
     }
+
+    public ArrayList<Entry> getDictionary() {
+        return dictionary;
+    }
 }
