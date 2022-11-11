@@ -31,6 +31,8 @@ public class MatchFinder {
                     entry.setLength(length);
                     if(i+length < s.length()){
                         entry.setNextSymbol(s.charAt(i+length));
+                    }else{
+                        entry.setNextSymbol(Character.MIN_VALUE);
                     }
                     dictionary.addEntry(entry);
                     length++;

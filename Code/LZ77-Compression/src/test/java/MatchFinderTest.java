@@ -1,3 +1,4 @@
+import org.example.Decoding.Decoder;
 import org.example.Encoding.MatchFinder;
 import org.example.Util.Dictionary;
 import org.example.Util.Entry;
@@ -17,5 +18,8 @@ public class MatchFinderTest {
         for (Entry e : list){
             System.out.println(e.getOffset() +","+e.getLength()+","+ e.getNextSymbol());
         }
+        Decoder decoder = new Decoder();
+        String decodedString = decoder.decode(list);
+        System.out.println(decodedString);
     }
 }
