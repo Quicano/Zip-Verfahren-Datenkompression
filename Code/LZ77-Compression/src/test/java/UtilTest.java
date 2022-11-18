@@ -8,7 +8,7 @@ public class UtilTest {
     @Test
     public void newEntry(){
         Dictionary dictionary = new Dictionary();
-        dictionary.creatEntry(0,0,'e');
+        dictionary.createEntry(0,0,'e');
         char c = 'e';
 
         Entry entry = new Entry();

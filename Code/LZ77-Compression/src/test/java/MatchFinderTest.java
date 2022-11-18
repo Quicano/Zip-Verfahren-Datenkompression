@@ -13,7 +13,7 @@ public class MatchFinderTest {
     public void testExampleString(){
         String s = "Blah blah blah!!";
         MatchFinder matchFinder = new MatchFinder();
-        Dictionary d = matchFinder.lookForMatch(s);
+        Dictionary d = matchFinder.lookForMatch(s, 5, 4);
         ArrayList<Entry> list = d.getDictionary();
         for (Entry e : list){
             System.out.println(e.getOffset() +","+e.getLength()+","+ e.getNextSymbol());
@@ -27,7 +27,7 @@ public class MatchFinderTest {
     public void testRandomString(){
         String s = "Hier Testet ihr Hier hier der String";
         MatchFinder matchFinder = new MatchFinder();
-        Dictionary d = matchFinder.lookForMatch(s);
+        Dictionary d = matchFinder.lookForMatch(s, 5, 4);
         ArrayList<Entry> list = d.getDictionary();
         for (Entry e : list){
             System.out.println(e.getOffset() +","+e.getLength()+","+ e.getNextSymbol());
