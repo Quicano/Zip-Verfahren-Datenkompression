@@ -5,10 +5,8 @@ import org.example.Util.Dictionary;
 import org.example.Util.Entry;
 
 public class MatchFinder {
-    private static int searchBufferLength = 5;
-    private static int lookaheadBufferLength = 4;
 
-    public Dictionary lookForMatch(String s){
+    public Dictionary lookForMatch(String s, int searchBufferLength, int lookaheadBufferLength){
         Dictionary dictionary = new Dictionary();
         int i = 0;
         while(i < s.length()){
@@ -39,8 +37,8 @@ public class MatchFinder {
                 }
                 j--;
             }
-            if (matchFound == false){
-                dictionary.creatEntry(0,0, c);
+            if (!matchFound){
+                dictionary.createEntry(0,0, c);
             }
             i = i+length;
         }
