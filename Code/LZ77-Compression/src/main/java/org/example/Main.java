@@ -1,14 +1,16 @@
 package org.example;
 
 import org.example.Encoding.MatchFinder;
+import org.example.GUI.MainFrame;
 import org.example.Util.Dictionary;
 import org.example.Util.Entry;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         MatchFinder matchFinder = new MatchFinder();
 
@@ -25,5 +27,9 @@ public class Main {
             System.out.println(e.getOffset() +","+e.getLength()+","+ e.getNextSymbol());
         }
 
+    }*/
+
+    public static void main(String[] args) throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        MainFrame mainFrame = new MainFrame();
     }
 }
