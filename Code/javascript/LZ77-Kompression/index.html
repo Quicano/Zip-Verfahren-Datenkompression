@@ -1,40 +1,52 @@
 <!doctype html>
 <html lang="de">
+    
 <head>
     <meta charset="utf-8">
     <meta name="description" content="">
     <meta name="author" content="">
     <title>LZ77 Demo Kit</title>
 </head>
+
 <body>
+    <div class="input">
+        <fieldset>
+            <label for="searchBuffer">Search Buffer:</label>
+            <input id="searchBuffer" type="text" placeholder="5">
 
-<div class="input">
-    <fieldset>
-        <label for="searchBuffer">Search Buffer:</label>
-        <input id="searchBuffer" type="text" placeholder="5">
+            <label for="lookaheadBuffer">Lookahead Buffer:</label>
+            <input id="lookaheadBuffer" type="text" placeholder="4">
 
-        <label for="lookaheadBuffer">Lookahead Buffer:</label>
-        <input id="lookaheadBuffer" type="text" placeholder="4">
+            <label for="text">Text:</label>
+            <input id="text" type="text" placeholder="Gar nicht übel sprach der Dübel und verschwand in der Wand">
 
-        <label for="text">Text:</label>
-        <input id="text" type="text" placeholder="Gar nicht übel sprach der Dübel und verschwand in der Wand">
+            <button type="submit" class="pure-button">Start</button>
+        </fieldset>
+    </div>
 
-        <button type="submit" class="pure-button">Start</button>
-    </fieldset>
-</div>
-
-<div class="output"> 
-    <fieldset>
-        <div class="slidingWindow">
-            <label>Sliding Window:</label>
-        </div>
-        <div class="dictionary">
-            <label>Dictionary:</label>
-        </div>
-    </fieldset>
-</div>
-
+    <div class="output"> 
+        <fieldset>
+            <div class="slidingWindow">
+                <label>Sliding Window:</label>
+                    <form>
+                        <form>
+                            <label >search buffer:</label>
+                            <label id="searchBufferLabel"></label>
+                        </form>
+                        <form>
+                            <label >lookahead buffer:</label>
+                            <label id="lookaheadBufferLabel"></label>
+                        </form>
+                    </form>
+            </div>
+            <div class="dictionary">
+                <label>Dictionary:</label>
+                <table id="dictionaryTable"></table>
+            </div>
+        </fieldset>
+    </div>
 </body>
+
 </html>
 
-<script src="src/main.js"></script>
+<script src="test.js"></script>
