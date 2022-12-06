@@ -77,7 +77,7 @@ function encode(string, searchBufferLength, lookaheadBufferLength) {
         if (maxLength == 0) {
             i++;
         } else {
-            i = i+maxLength;
+            i = i+maxLength+1;
         }
     }
     return dictionary;
@@ -106,7 +106,7 @@ function decode(dictionary) {
 function main() {
     const string1 = "aacaacabcabaaac";
     const string2 = "Blah blah blah!!";
-    let dictionary = encode(string1, 5, 4);
+    let dictionary = encode(string2, 100, 100);
 
     let array = dictionary.getDictionary();
     for (let index = 0; index < array.length; index++) {

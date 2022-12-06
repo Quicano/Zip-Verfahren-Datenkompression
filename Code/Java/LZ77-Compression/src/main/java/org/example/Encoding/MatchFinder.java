@@ -4,8 +4,11 @@ package org.example.Encoding;
 import org.example.Util.Dictionary;
 import org.example.Util.Entry;
 
+<<<<<<< HEAD
 import javax.swing.*;
 
+=======
+>>>>>>> fc217a4333ce5b6c98d6d18bb2833921c3530cfb
 public class MatchFinder {
 
     public Dictionary lookForMatch(String s, int searchBufferLength, int lookaheadBufferLength){
@@ -13,7 +16,10 @@ public class MatchFinder {
         int i = 0;
         while(i < s.length()){
             char c = s.charAt(i);
+<<<<<<< HEAD
 
+=======
+>>>>>>> fc217a4333ce5b6c98d6d18bb2833921c3530cfb
             int j = i-1;
             int length = 1;
             boolean matchFound = false;
@@ -47,6 +53,7 @@ public class MatchFinder {
         }
         return dictionary;
     }
+<<<<<<< HEAD
 
     public Dictionary encode(String string, int searchBufferLength, int lookaheadBufferLength) {
         Dictionary dictionary = new Dictionary();
@@ -96,4 +103,6 @@ public class MatchFinder {
         }
         return dictionary;
     }
+=======
+>>>>>>> fc217a4333ce5b6c98d6d18bb2833921c3530cfb
 }
