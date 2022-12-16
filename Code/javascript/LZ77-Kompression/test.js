@@ -106,7 +106,8 @@ function decode(dictionary) {
 function main() {
     const string1 = "aacaacabcabaaac";
     const string2 = "Blah blah blah!!";
-    let dictionary = encode(string2, 100, 100);
+    const string3 = "abracadabra!";
+    let dictionary = encode(string2, 10, 4);
 
     let array = dictionary.getDictionary();
     for (let index = 0; index < array.length; index++) {
