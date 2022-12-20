@@ -3,45 +3,91 @@
     
 <head>
     <meta charset="utf-8">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>LZ77 Demo Kit</title>
+    <meta name="description" content="Demo kit for demonstrating encoding and decoding of the LZ77 algorithm.">
+    <meta name="author" content="Tobias & Philipp">
+    <link rel="stylesheet" href="style.css">
+    <title>LZ77-Algorithmus Demo Kit</title>
 </head>
 
 <body>
-    <div class="input">
-        <fieldset>
-            <label for="searchBuffer">Search Buffer:</label>
-            <input id="searchBuffer" type="text" placeholder="5">
+    <!-- header -->
+    <div class="header">
+        <h1>LZ77-Algorithmus Demonstrations Kit</h1>
+    </div>
 
-            <label for="lookaheadBuffer">Lookahead Buffer:</label>
-            <input id="lookaheadBuffer" type="text" placeholder="4">
+    <!-- user input div -->
+    <div>
+        <fieldset>
+            <legend><b>Eingabe:</b></legend>
+
+            <label for="search-buffer">Search Buffer:</label>
+            <input id="search-buffer" type="text" size="5" placeholder="5" pattern="[0-9]+" class="number-input">
+
+            <label for="lookahead-buffer">Lookahead Buffer:</label>
+            <input id="lookahead-buffer" type="text" size="5" placeholder="4" pattern="[0-9]+" class="number-input">
 
             <label for="text">Text:</label>
-            <input id="text" type="text" placeholder="Gar nicht übel sprach der Dübel und verschwand in der Wand">
+            <input id="text" type="text" size="56" list="suggestions" placeholder="Gar nicht übel sprach der Dübel und verschwand in der Wand.">
+                <datalist id="suggestions">
+                    <option value="Gar nicht übel sprach der Dübel und verschwand in der Wand.">
+                    <option value="aacaacabcabaaac">
+                    <option value="Blah blah blah!!">
+                    <option value="abracadabra!">
+                </datalist>
 
-            <button type="submit" class="pure-button">Start</button>
+            <button onclick="startEncoding()">Komprimieren</button>
+            <button onclick="startDecoding()" id="decode-button">Dekomprimieren</button>
         </fieldset>
     </div>
 
-    <div class="output"> 
+    <!-- encoding div -->
+    <div> 
         <fieldset>
-            <div class="slidingWindow">
-                <label>Sliding Window:</label>
-                    <form>
-                        <form>
-                            <label >search buffer:</label>
-                            <label id="searchBufferLabel"></label>
-                        </form>
-                        <form>
-                            <label >lookahead buffer:</label>
-                            <label id="lookaheadBufferLabel"></label>
-                        </form>
-                    </form>
+            <legend><b>Kompression:</b></legend>
+
+            <div class="text">
+                <h3>Sliding Window:</h3>
+                <p id="sliding-window">Hier könnte Ihre Werbung stehen.</p>
             </div>
+
             <div class="dictionary">
-                <label>Dictionary:</label>
-                <table id="dictionaryTable"></table>
+                <h3>Dictionary:</h3>
+                <table id="dictionary-table-encode" class="styled-table">
+                    <thead>
+                        <tr>
+                          <th>Offset</th>
+                          <th>Length</th>
+                          <th>Symbol</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table> 
+            </div>
+        </fieldset>
+    </div>
+
+    <!-- decoding div -->
+    <div> 
+        <fieldset>
+            <legend><b>Dekompression:</b></legend>
+
+            <div class="text">
+                <h3>Text:</h3>
+                <p id="decode-string">Hier könnte Ihre Werbung stehen.</p>
+            </div>
+
+            <div class="dictionary">
+                <h3>Dictionary:</h3>
+                <table id="dictionary-table-decode" class="styled-table">
+                    <thead>
+                        <tr>
+                          <th>Offset</th>
+                          <th>Length</th>
+                          <th>Symbol</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table> 
             </div>
         </fieldset>
     </div>
@@ -49,4 +95,4 @@
 
 </html>
 
-<script src="test.js"></script>
+<script src="code.js"></script>

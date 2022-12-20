@@ -34,12 +34,18 @@ class Dictionary {
     }
 }
 
-function encode(string, searchBufferLength, lookaheadBufferLength) {
+async function encode(string, searchBufferLength, lookaheadBufferLength) {
+    let sbLabel = document.getElementById('searchBufferLabel');
+    let lhbLabel = document.getElementById('lookaheadBufferLabel');
+
     let dictionary = new Dictionary();
     let i = 0;
 
     // loop through string:
     while (i < string.length) {
+        sbLabel.innerHTML = string.slice(0, i);
+        lhbLabel.innerHTML = string.slice(i);
+        await new Promise(resolve => setTimeout(resolve, 1000));
         let char = string.charAt(i);
         let offset = 0;
         let maxLength = 0;
@@ -77,7 +83,7 @@ function encode(string, searchBufferLength, lookaheadBufferLength) {
         if (maxLength == 0) {
             i++;
         } else {
-            i = i+maxLength+1;
+            i = i+maxLength;
         }
     }
     return dictionary;
@@ -103,12 +109,49 @@ function decode(dictionary) {
     return decodedString;
 }
 
+function generateTable(array) {
+    let body = document.getElementById('dictionaryTable');
+    let table = document.createElement('table');
+    table.style.width = '100px';
+    table.style.border = '1px solid black';
+
+    let tHead = table.createTHead();
+    let tRow = tHead.insertRow();
+    let th = document.createElement("th");
+    th.appendChild(document.createTextNode("offset"));
+    tRow.appendChild(th);
+    th = document.createElement("th");
+    th.appendChild(document.createTextNode("length"));
+    tRow.appendChild(th);
+    th = document.createElement("th");
+    th.appendChild(document.createTextNode("symbol"));
+    tRow.appendChild(th);
+
+    for (let i = 0; i < array.length; i++) {
+        let tableRow = table.insertRow();
+        tableRow.insertCell().appendChild(document.createTextNode(array[i].getOffset()));
+        tableRow.insertCell().appendChild(document.createTextNode(array[i].getLength()));
+        tableRow.insertCell().appendChild(document.createTextNode(array[i].getNextSymbol()));
+    }
+    body.appendChild(table);
+}
+
+function generateSlidingWindow(string) {
+    let sbLabel = document.getElementById('searchBufferLabel');
+    let lhbLabel = document.getElementById('lookaheadBufferLabel');
+
+    sbLabel.appendChild(document.createTextNode(string.slice(0, 7)));
+    lhbLabel.appendChild(document.createTextNode(string.slice(7)));
+}
+
 function main() {
     const string1 = "aacaacabcabaaac";
     const string2 = "Blah blah blah!!";
-    const string3 = "abracadabra!";
-    let dictionary = encode(string2, 10, 4);
+    let dictionary = encode(string2, 5, 4);
 
+    generateTable(dictionary.getDictionary());
+
+    
     let array = dictionary.getDictionary();
     for (let index = 0; index < array.length; index++) {
         console.log(array[index].getOffset().toString() + ", " + array[index].getLength().toString() + ", " + array[index].getNextSymbol().toString());

@@ -34,18 +34,12 @@ class Dictionary {
     }
 }
 
-async function encode(string, searchBufferLength, lookaheadBufferLength) {
-    let sbLabel = document.getElementById('searchBufferLabel');
-    let lhbLabel = document.getElementById('lookaheadBufferLabel');
-
+function encode(string, searchBufferLength, lookaheadBufferLength) {
     let dictionary = new Dictionary();
     let i = 0;
 
     // loop through string:
     while (i < string.length) {
-        sbLabel.innerHTML = string.slice(0, i);
-        lhbLabel.innerHTML = string.slice(i);
-        await new Promise(resolve => setTimeout(resolve, 1000));
         let char = string.charAt(i);
         let offset = 0;
         let maxLength = 0;
@@ -78,12 +72,15 @@ async function encode(string, searchBufferLength, lookaheadBufferLength) {
             }
             j--; 
         }
+        // add to dictionary:
         dictionary.addEntry(new Entry(offset, maxLength, char));
+        // add to html table:
+        addToHTMLTable(new Entry(offset, maxLength, char));
         
         if (maxLength == 0) {
             i++;
         } else {
-            i = i+maxLength;
+            i = i+maxLength+1;
         }
     }
     return dictionary;
@@ -97,6 +94,7 @@ function decode(dictionary) {
         let length = dictionary[e].getLength();
         let char = dictionary[e].getNextSymbol();
         
+        // append to string:
         if (length > 0) {
             for (let i = 0; i < length; i++) {
                 decodedString += decodedString.charAt(decodedString.length - offset);
@@ -105,60 +103,66 @@ function decode(dictionary) {
         if (char != "Ende") {
             decodedString += char;
         }
+        // display current string:
+        displayDecodeString(decodedString);
     }
     return decodedString;
 }
 
-function generateTable(array) {
-    let body = document.getElementById('dictionaryTable');
-    let table = document.createElement('table');
-    table.style.width = '100px';
-    table.style.border = '1px solid black';
+function addToHTMLTable(entry) {
+    let table = document.getElementById("dictionary-table-encode");
+    let tableBody = table.getElementsByTagName("tbody")[0];
+    let tableRow = tableBody.insertRow();
+    tableRow.insertCell().appendChild(document.createTextNode(entry.getOffset()));
+    tableRow.insertCell().appendChild(document.createTextNode(entry.getLength()));
+    tableRow.insertCell().appendChild(document.createTextNode(entry.getNextSymbol()));
+}
 
-    let tHead = table.createTHead();
-    let tRow = tHead.insertRow();
-    let th = document.createElement("th");
-    th.appendChild(document.createTextNode("offset"));
-    tRow.appendChild(th);
-    th = document.createElement("th");
-    th.appendChild(document.createTextNode("length"));
-    tRow.appendChild(th);
-    th = document.createElement("th");
-    th.appendChild(document.createTextNode("symbol"));
-    tRow.appendChild(th);
+function displayDecodeString(string) {
+    let paragraph = document.getElementById("decode-string");
+    paragraph.innerHTML = string;
+}
 
-    for (let i = 0; i < array.length; i++) {
-        let tableRow = table.insertRow();
-        tableRow.insertCell().appendChild(document.createTextNode(array[i].getOffset()));
-        tableRow.insertCell().appendChild(document.createTextNode(array[i].getLength()));
-        tableRow.insertCell().appendChild(document.createTextNode(array[i].getNextSymbol()));
+function startEncoding() {
+    // get input:
+    let string = document.getElementById("text").value;
+    let searchBufferLength = Number(document.getElementById("search-buffer").value);
+    let lookaheadBufferLength = Number(document.getElementById("lookahead-buffer").value);
+
+    // check if valid input:
+    if (Number.isInteger(searchBufferLength) && searchBufferLength > 0 && Number.isInteger(lookaheadBufferLength) && lookaheadBufferLength > 0) {
+        // clear table body:
+        let table = document.getElementById("dictionary-table-encode");
+        let tableBody = table.getElementsByTagName("tbody")[0];
+        tableBody.innerHTML = "";
+
+        // encode:
+        dictionary = encode(string, searchBufferLength, lookaheadBufferLength);
+
+        // enable decode button:
+        button.disabled = false;
     }
-    body.appendChild(table);
 }
 
-function generateSlidingWindow(string) {
-    let sbLabel = document.getElementById('searchBufferLabel');
-    let lhbLabel = document.getElementById('lookaheadBufferLabel');
+function startDecoding() {
+    // clear table body:
+    let decodeTable = document.getElementById("dictionary-table-decode");
+    let decodeTableBody = decodeTable.getElementsByTagName("tbody")[0];
+    decodeTable.removeChild(decodeTableBody);
 
-    sbLabel.appendChild(document.createTextNode(string.slice(0, 7)));
-    lhbLabel.appendChild(document.createTextNode(string.slice(7)));
+    // copy dictionary table:
+    let encodeTable = document.getElementById("dictionary-table-encode");
+    let encodeTableBody = encodeTable.getElementsByTagName("tbody")[0];
+    let tableBodyCopy = encodeTableBody.cloneNode(true);
+    decodeTable.appendChild(tableBodyCopy);
+
+    // decode:
+    decode(dictionary.getDictionary());
 }
 
-function main() {
-    const string1 = "aacaacabcabaaac";
-    const string2 = "Blah blah blah!!";
-    let dictionary = encode(string2, 5, 4);
+// global variables:
+let dictionary;
+let button = document.getElementById("decode-button");
 
-    generateTable(dictionary.getDictionary());
-
-    
-    let array = dictionary.getDictionary();
-    for (let index = 0; index < array.length; index++) {
-        console.log(array[index].getOffset().toString() + ", " + array[index].getLength().toString() + ", " + array[index].getNextSymbol().toString());
-    }
-
-    let text = decode(dictionary.getDictionary());
-    console.log(text);
-}
-  
-main();
+// disable decode button at start:
+button.disabled = true;
