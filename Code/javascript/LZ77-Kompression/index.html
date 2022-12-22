@@ -21,13 +21,13 @@
             <legend><b>Eingabe:</b></legend>
 
             <label for="search-buffer">Search Buffer:</label>
-            <input id="search-buffer" type="text" size="5" placeholder="5" pattern="[0-9]+" class="number-input">
+            <input id="search-buffer" type="text" size="5" value="5" placeholder="5" pattern="[0-9]+" class="number-input">
 
             <label for="lookahead-buffer">Lookahead Buffer:</label>
-            <input id="lookahead-buffer" type="text" size="5" placeholder="4" pattern="[0-9]+" class="number-input">
+            <input id="lookahead-buffer" type="text" size="5" value="4" placeholder="4" pattern="[0-9]+" class="number-input">
 
             <label for="text">Text:</label>
-            <input id="text" type="text" size="56" list="suggestions" placeholder="Gar nicht übel sprach der Dübel und verschwand in der Wand.">
+            <input id="text" type="text" size="56" list="suggestions" value="Blah blah blah!!" placeholder="Gar nicht übel sprach der Dübel und verschwand in der Wand.">
                 <datalist id="suggestions">
                     <option value="Gar nicht übel sprach der Dübel und verschwand in der Wand.">
                     <option value="aacaacabcabaaac">
@@ -42,7 +42,7 @@
 
     <!-- encoding div -->
     <div> 
-        <fieldset>
+        <fieldset id="encode-fieldset">
             <legend><b>Kompression:</b></legend>
 
             <div class="text">
@@ -68,7 +68,7 @@
 
     <!-- decoding div -->
     <div> 
-        <fieldset>
+        <fieldset id="decode-fieldset">
             <legend><b>Dekompression:</b></legend>
 
             <div class="text">

@@ -136,6 +136,9 @@ function startEncoding() {
         let tableBody = table.getElementsByTagName("tbody")[0];
         tableBody.innerHTML = "";
 
+        // scroll to fieldset:
+        document.getElementById("encode-fieldset").scrollIntoView(options);
+
         // encode:
         dictionary = encode(string, searchBufferLength, lookaheadBufferLength);
 
@@ -150,6 +153,9 @@ function startDecoding() {
     let decodeTableBody = decodeTable.getElementsByTagName("tbody")[0];
     decodeTable.removeChild(decodeTableBody);
 
+    // scroll to fieldset:
+    document.getElementById("decode-fieldset").scrollIntoView(options);
+
     // copy dictionary table:
     let encodeTable = document.getElementById("dictionary-table-encode");
     let encodeTableBody = encodeTable.getElementsByTagName("tbody")[0];
@@ -163,6 +169,7 @@ function startDecoding() {
 // global variables:
 let dictionary;
 let button = document.getElementById("decode-button");
+const options = {behavior: "smooth"};
 
 // disable decode button at start:
 button.disabled = true;
