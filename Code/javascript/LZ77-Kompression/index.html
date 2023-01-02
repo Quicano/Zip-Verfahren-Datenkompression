@@ -6,13 +6,13 @@
     <meta name="description" content="Demo kit for demonstrating encoding and decoding of the LZ77 algorithm.">
     <meta name="author" content="Tobias & Philipp">
     <link rel="stylesheet" href="style.css">
-    <title>LZ77-Algorithmus Demo Kit</title>
+    <title>Demo-Kit: LZ77-Algorithmus</title>
 </head>
 
 <body>
     <!-- header -->
     <div class="header">
-        <h1>LZ77-Algorithmus Demonstrations Kit</h1>
+        <h1>Demonstrations-Kit: LZ77-Algorithmus</h1>
     </div>
 
     <!-- user input div -->
@@ -36,7 +36,8 @@
                 </datalist>
 
             <button onclick="startEncoding()">Komprimieren</button>
-            <button onclick="startDecoding()" id="decode-button">Dekomprimieren</button>
+            <button onclick="startDecoding()" id="decode-button" disabled>Dekomprimieren</button>
+            <button onclick="switchSpeed()" id="speed-button">1x</button>
         </fieldset>
     </div>
 
@@ -48,6 +49,9 @@
             <div class="text">
                 <h3>Sliding Window:</h3>
                 <p id="sliding-window">Hier könnte Ihre Werbung stehen.</p>
+                <fieldset>
+                    <p id="info"></p>
+                </fieldset>
             </div>
 
             <div class="dictionary">
@@ -95,4 +99,4 @@
 
 </html>
 
-<script src="code.js"></script>
+<script src="test.js"></script>
