@@ -21,13 +21,13 @@
             <legend><b>Eingabe:</b></legend>
 
             <label for="search-buffer">Search Buffer:</label>
-            <input id="search-buffer" type="text" size="5" value="5" placeholder="5" pattern="[0-9]+" class="number-input">
+            <input id="search-buffer" type="text" size="3" value="5" placeholder="5" pattern="[0-9]+" maxlength="4" class="number-input">
 
             <label for="lookahead-buffer">Lookahead Buffer:</label>
-            <input id="lookahead-buffer" type="text" size="5" value="4" placeholder="4" pattern="[0-9]+" class="number-input">
+            <input id="lookahead-buffer" type="text" size="3" value="4" placeholder="4" pattern="[0-9]+" maxlength="4" class="number-input">
 
             <label for="text">Text:</label>
-            <input id="text" type="text" size="56" list="suggestions" value="Blah blah blah!!" placeholder="Gar nicht übel sprach der Dübel und verschwand in der Wand.">
+            <input id="text" type="text" size="30" list="suggestions" value="Blah blah blah!!" placeholder="Blah blah blah!!" maxlength="1000">
                 <datalist id="suggestions">
                     <option value="Gar nicht übel sprach der Dübel und verschwand in der Wand.">
                     <option value="aacaacabcabaaac">
@@ -35,9 +35,29 @@
                     <option value="abracadabra!">
                 </datalist>
 
-            <button onclick="startEncoding()">Komprimieren</button>
+            <button onclick="startEncoding()" id="encode-button">Komprimieren</button>
             <button onclick="startDecoding()" id="decode-button" disabled>Dekomprimieren</button>
             <button onclick="switchSpeed()" id="speed-button">1x</button>
+            <label for="delay-button">Nitro:</label>
+            <button onclick="switchDelay()" id="delay-button">aus</button>
+            <button id="legend-button">Legende</button>
+
+            <!-- legend div -->
+            <div id="legend" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span class="close">&times;</span>
+                        <h2>Legende</h2>
+                      </div>
+                      <div class="modal-body">
+                        <p style="color: #009879; text-align: left;"><b>Grün: Übereinstimmung gefunden</b></p>
+                        <p style="color: #bb1004; text-align: left;"><b>Rot: Zeichen stimmen nicht mehr überein</b></p>
+                        <p style="text-align: left;"><b>Schwarz: Suche im Search Buffer / Neu hinzugefügtes Zeichen</b></p>
+                        <p style="color: #909999a8; text-align: left;"><b>Graue Zeile in Tabelle: Aktueller Eintrag</b></p>
+                      </div>
+                </div>
+            </div>
+
         </fieldset>
     </div>
 
@@ -49,9 +69,7 @@
             <div class="text">
                 <h3>Sliding Window:</h3>
                 <p id="sliding-window">Hier könnte Ihre Werbung stehen.</p>
-                <fieldset>
-                    <p id="info"></p>
-                </fieldset>
+                <p id="encode-info" class="info">Information</p>
             </div>
 
             <div class="dictionary">
@@ -99,4 +117,4 @@
 
 </html>
 
-<script src="test.js"></script>
+<script src="code.js"></script>
