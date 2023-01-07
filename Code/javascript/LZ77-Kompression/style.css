@@ -72,18 +72,26 @@ button:disabled {
     font-size: 20px;
 }
 
-.bold-text {
+.sb-background {
+    background-color: aqua;
+}
+
+.lb-background {
+    background-color: blueviolet;
+}
+
+.b-text {
     font-weight: bold;
     font-size: 25px;
 }
 
-.green-text {
+.g-text {
     color: #009879;
     font-weight: bold;
     font-size: 25px;
 }
 
-.red-text {
+.r-text {
     color: #bb1004;
     font-weight: bold;
     font-size: 25px;

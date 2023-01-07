@@ -52,21 +52,22 @@ async function encode(string, searchBufferLength, lookaheadBufferLength) {
         info.innerHTML = "Offset: " + offset + ", Length: " + maxLength;
 
         // color text and wait:
-        slidingWindow.innerHTML = generateColoredText(string, new Array([i, i+1, "green"]));
+        //slidingWindow.innerHTML = displayBuffer(generateColoredText(string, new Array([i, i + 1, "g"])), searchBufferLength, lookaheadBufferLength, i, 1);
+        slidingWindow.innerHTML = generateColoredText(string, new Array([i, i+1, "g"]));
         await sleep(1000);
 
         // go backwards through searchbuffer:
         while (j >= 0 && i-j <= searchBufferLength) {
 
             // color text and wait:
-            slidingWindow.innerHTML = generateColoredText(string, new Array([j, j+1, "bold"], [i, i+1, "green"]));
+            slidingWindow.innerHTML = generateColoredText(string, new Array([j, j+1, "b"], [i, i+1, "g"]));
             await sleep(1000);
 
             if (string.charAt(i) == string.charAt(j)) {
                 let length = 1;
 
                 // color text and wait:
-                slidingWindow.innerHTML = generateColoredText(string, new Array([j, j+1, "green"], [i, i+1, "green"]));
+                slidingWindow.innerHTML = generateColoredText(string, new Array([j, j+1, "g"], [i, i+1, "g"]));
                 await sleep(1000);
 
                 // get length of match:
@@ -76,20 +77,20 @@ async function encode(string, searchBufferLength, lookaheadBufferLength) {
 
                         // color text and wait:
                         if (j+length < i) {
-                            slidingWindow.innerHTML = generateColoredText(string, new Array([j, j+length, "green"], [i, i+length, "green"]));
+                            slidingWindow.innerHTML = generateColoredText(string, new Array([j, j+length, "g"], [i, i+length, "g"]));
                         } else {
                             // in case match reaches into lookahead buffer:
-                            slidingWindow.innerHTML = generateColoredText(string, new Array([j, i, "green"], [i, i+length, "green"]));
+                            slidingWindow.innerHTML = generateColoredText(string, new Array([j, i, "g"], [i, i+length, "g"]));
                         }
                         await sleep(1000);
 
                     } else {
                         // color text and wait:
                         if (j+length < i) {
-                            slidingWindow.innerHTML = generateColoredText(string, new Array([j, j+length, "green"], [j+length, j+length+1, "red"], [i, i+length, "green"], [i+length, i+length+1, "red"]));
+                            slidingWindow.innerHTML = generateColoredText(string, new Array([j, j+length, "g"], [j+length, j+length+1, "r"], [i, i+length, "g"], [i+length, i+length+1, "r"]));
                         } else {
                             // in case match reaches into lookahead buffer:
-                            slidingWindow.innerHTML = generateColoredText(string, new Array([j, j+length, "green"], [j+length, j+length+1, "red"], [j+length+1, i+length, "green"], [i+length, i+length+1, "red"]));
+                            slidingWindow.innerHTML = generateColoredText(string, new Array([j, j+length, "g"], [j+length, j+length+1, "r"], [j+length+1, i+length, "g"], [i+length, i+length+1, "r"]));
                         }
                         await sleep(1000); 
 
@@ -132,6 +133,7 @@ async function encode(string, searchBufferLength, lookaheadBufferLength) {
 
 async function decode(dictionary) {
     let decodedString = "";
+    let paragraph = document.getElementById("decode-string");
     let tableRows = document.getElementById("dictionary-table-decode").rows;
 
     for (let e = 0; e < dictionary.length; e++) {
@@ -150,26 +152,26 @@ async function decode(dictionary) {
                 const index = decodedString.length - offset;
 
                 // color text and wait:
-                displayDecodeString(generateColoredText(decodedString, new Array([startGreen, index+1, "green"], [startBlack, decodedString.length, "bold"])));
+                paragraph.innerHTML = generateColoredText(decodedString, new Array([startGreen, index+1, "g"], [startBlack, decodedString.length, "b"]));
                 await sleep(1000);
 
                 decodedString += decodedString.charAt(index);
 
                 // color text and wait:
-                displayDecodeString(generateColoredText(decodedString, new Array([startGreen, index+1, "green"], [decodedString.length-(i+1), decodedString.length, "bold"])));
+                paragraph.innerHTML = generateColoredText(decodedString, new Array([startGreen, index+1, "g"], [decodedString.length-(i+1), decodedString.length, "b"]));
                 await sleep(1000);
             }
         }
         if (char != "Ende") {
             decodedString += char;
 
-            displayDecodeString(generateColoredText(decodedString, new Array([-1, decodedString.length, "bold"])));
+            paragraph.innerHTML = generateColoredText(decodedString, new Array([-1, decodedString.length, "b"]));
             await sleep(1000);
         }
         tableRows[e+1].style.backgroundColor = "";
     }
     // display final string:
-    displayDecodeString(decodedString);
+    paragraph.innerHTML = decodedString;
 
     return decodedString;
 }
@@ -182,11 +184,6 @@ function addToHTMLTable(entry) {
     tableRow.insertCell().appendChild(document.createTextNode(entry.getOffset()));
     tableRow.insertCell().appendChild(document.createTextNode(entry.getLength()));
     tableRow.insertCell().appendChild(document.createTextNode(entry.getNextSymbol()));
-}
-
-function displayDecodeString(string) {
-    let paragraph = document.getElementById("decode-string");
-    paragraph.innerHTML = string;
 }
 
 async function startEncoding() {
@@ -259,24 +256,40 @@ function generateColoredText(string, coloredSegments) {
         const end = coloredSegments[i][1];
         const color = coloredSegments[i][2];
 
+        // wrap segements with span elements:
         coloredText += string.slice(lastEnd, begin) + "<span class='" + color + "-text'>" + string.replace(/\s/g, '_').slice(begin, end) + "</span>";
         lastEnd = end;
     }
     return coloredText + string.slice(lastEnd);
 }
 
-function switchDelay() {
-    let button = document.getElementById("delay-button");
+function displayBuffer(string, searchBufferLength, lookaheadBufferLength, index, spans) {
+    index = index + spans * 28;
+    searchBufferLength = searchBufferLength + spans * 28;
+    lookaheadBufferLength = lookaheadBufferLength + spans * 28;
+
+    // get string segements:
+    const beforesb = string.slice(0, index - searchBufferLength);
+    const sb = string.slice(index - searchBufferLength, index);
+    const lb = string.slice(index, index + lookaheadBufferLength);
+    const afterlb = string.slice(index + lookaheadBufferLength);
+
+    // wrap segements with span elements:
+    return beforesb + "<span class='sb-background'>" + sb + "</span><span class='lb-background'>" + lb + "</span>" + afterlb;
+}
+
+function fastForward() {
+    let button = document.getElementById("fast-forward-button");
     let speedButton = document.getElementById("speed-button");
 
     if (speed != 0) {
         securedSpeed = speed;
         speed = 0;
-        button.textContent = "an";
+        button.textContent = "Stop";
         speedButton.disabled = true;
     } else {
         speed = securedSpeed;
-        button.textContent = "aus";
+        button.textContent = "Vorspulen";
         speedButton.disabled = false;
     }
 }

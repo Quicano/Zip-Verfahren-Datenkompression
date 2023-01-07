@@ -37,9 +37,8 @@
 
             <button onclick="startEncoding()" id="encode-button">Komprimieren</button>
             <button onclick="startDecoding()" id="decode-button" disabled>Dekomprimieren</button>
-            <button onclick="switchSpeed()" id="speed-button">1x</button>
-            <label for="delay-button">Nitro:</label>
-            <button onclick="switchDelay()" id="delay-button">aus</button>
+            <button onclick="switchSpeed()" id="speed-button" style="width: 1cm;">1x</button>
+            <button onclick="fastForward()" id="fast-forward-button" style="width: 2.1cm;">Vorspulen</button>
             <button id="legend-button">Legende</button>
 
             <!-- legend div -->
@@ -54,6 +53,8 @@
                         <p style="color: #bb1004; text-align: left;"><b>Rot: Zeichen stimmen nicht mehr überein</b></p>
                         <p style="text-align: left;"><b>Schwarz: Suche im Search Buffer / Neu hinzugefügtes Zeichen</b></p>
                         <p style="color: #909999a8; text-align: left;"><b>Graue Zeile in Tabelle: Aktueller Eintrag</b></p>
+                        <p style="color: aqua; text-align: left;"><b>Blauer Hintergrund: Search Buffer</b></p>
+                        <p style="color: blueviolet; text-align: left;"><b>Lila Hintergrund: Lookahead Buffer</b></p>
                       </div>
                 </div>
             </div>
@@ -68,7 +69,7 @@
 
             <div class="text">
                 <h3>Sliding Window:</h3>
-                <p id="sliding-window">Hier könnte Ihre Werbung stehen.</p>
+                <p id="sliding-window">Hier<span class="sb-background"> könnte<span class="g-text"> Ihre </span></span> Werbung stehen.</p>
                 <p id="encode-info" class="info">Information</p>
             </div>
 
