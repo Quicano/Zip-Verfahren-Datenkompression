@@ -20,10 +20,10 @@
         <fieldset>
             <legend><b>Eingabe:</b></legend>
 
-            <label for="search-buffer">Search Buffer:</label>
+            <label for="search-buffer" style="background-color: #d1aeee;">Search Buffer:</label>
             <input id="search-buffer" type="text" size="3" value="5" placeholder="5" pattern="[0-9]+" maxlength="4" class="number-input">
 
-            <label for="lookahead-buffer">Lookahead Buffer:</label>
+            <label for="lookahead-buffer" style="background-color: #80b8f8;">Lookahead Buffer:</label>
             <input id="lookahead-buffer" type="text" size="3" value="4" placeholder="4" pattern="[0-9]+" maxlength="4" class="number-input">
 
             <label for="text">Text:</label>
@@ -48,13 +48,18 @@
                         <span class="close">&times;</span>
                         <h2>Legende</h2>
                       </div>
+                      <!--https://stackoverflow.com/questions/8433785/create-a-small-color-box-in-html-->
                       <div class="modal-body">
-                        <p style="color: #009879; text-align: left;"><b>Grün: Übereinstimmung gefunden</b></p>
-                        <p style="color: #bb1004; text-align: left;"><b>Rot: Zeichen stimmen nicht mehr überein</b></p>
-                        <p style="text-align: left;"><b>Schwarz: Suche im Search Buffer / Neu hinzugefügtes Zeichen</b></p>
-                        <p style="color: #909999a8; text-align: left;"><b>Graue Zeile in Tabelle: Aktueller Eintrag</b></p>
-                        <p style="color: aqua; text-align: left;"><b>Blauer Hintergrund: Search Buffer</b></p>
-                        <p style="color: blueviolet; text-align: left;"><b>Lila Hintergrund: Lookahead Buffer</b></p>
+                        <div class="input-color">
+                            <p><b>Text Text Text</b></p>
+                            <div class="color-box" style="background-color: #FF850A;"></div>
+                        </div>                        
+                        <p><b>Grün: Übereinstimmung gefunden</b></p>
+                        <p><b>Rot: Zeichen stimmen nicht mehr überein</b></p>
+                        <p><b>Schwarz: Suche im Search Buffer / Neu hinzugefügtes Zeichen</b></p>
+                        <p><b>Graue Zeile in Tabelle: Aktueller Eintrag</b></p>
+                        <p><b>Blauer Hintergrund: Search Buffer</b></p>
+                        <p><b>Lila Hintergrund: Lookahead Buffer</b></p>
                       </div>
                 </div>
             </div>
@@ -69,8 +74,8 @@
 
             <div class="text">
                 <h3>Sliding Window:</h3>
-                <p id="sliding-window">Hier<span class="sb-background"> könnte<span class="g-text"> Ihre </span></span> Werbung stehen.</p>
-                <p id="encode-info" class="info">Information</p>
+                <p id="sliding-window">Hier könnte Ihre Werbung stehen.</p>
+                <p id="encode-info" class="info">Offset: 0, Length: 0</p>
             </div>
 
             <div class="dictionary">

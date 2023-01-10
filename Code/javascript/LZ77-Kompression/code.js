@@ -52,22 +52,21 @@ async function encode(string, searchBufferLength, lookaheadBufferLength) {
         info.innerHTML = "Offset: " + offset + ", Length: " + maxLength;
 
         // color text and wait:
-        //slidingWindow.innerHTML = displayBuffer(generateColoredText(string, new Array([i, i + 1, "g"])), searchBufferLength, lookaheadBufferLength, i, 1);
-        slidingWindow.innerHTML = generateColoredText(string, new Array([i, i+1, "g"]));
+        slidingWindow.innerHTML = displayBuffer(generateColoredText(string, new Array([i, i + 1, "g"])), searchBufferLength, lookaheadBufferLength, i, 1);
         await sleep(1000);
 
         // go backwards through searchbuffer:
         while (j >= 0 && i-j <= searchBufferLength) {
 
             // color text and wait:
-            slidingWindow.innerHTML = generateColoredText(string, new Array([j, j+1, "b"], [i, i+1, "g"]));
+            slidingWindow.innerHTML = displayBuffer(generateColoredText(string, new Array([j, j + 1, "b"], [i, i + 1, "g"])), searchBufferLength, lookaheadBufferLength, i, 2);
             await sleep(1000);
 
             if (string.charAt(i) == string.charAt(j)) {
                 let length = 1;
 
                 // color text and wait:
-                slidingWindow.innerHTML = generateColoredText(string, new Array([j, j+1, "g"], [i, i+1, "g"]));
+                slidingWindow.innerHTML = displayBuffer(generateColoredText(string, new Array([j, j+1, "g"], [i, i+1, "g"])), searchBufferLength, lookaheadBufferLength, i, 2);
                 await sleep(1000);
 
                 // get length of match:
@@ -76,20 +75,22 @@ async function encode(string, searchBufferLength, lookaheadBufferLength) {
                         length++;
 
                         // color text and wait:
-                        if (j+length < i) {
-                            slidingWindow.innerHTML = generateColoredText(string, new Array([j, j+length, "g"], [i, i+length, "g"]));
+                        if (j + length < i) {
+                            slidingWindow.innerHTML = displayBuffer(generateColoredText(string, new Array([j, j+length, "g"], [i, i+length, "g"])), searchBufferLength, lookaheadBufferLength, i, 2);
                         } else {
                             // in case match reaches into lookahead buffer:
-                            slidingWindow.innerHTML = generateColoredText(string, new Array([j, i, "g"], [i, i+length, "g"]));
+                            slidingWindow.innerHTML = displayBuffer(generateColoredText(string, new Array([j, i, "g"], [i, i+length, "g"])), searchBufferLength, lookaheadBufferLength, i, 2);
                         }
                         await sleep(1000);
 
                     } else {
                         // color text and wait:
-                        if (j+length < i) {
+                        if (j + length < i) {
+                            //slidingWindow.innerHTML = displayBuffer(generateColoredText(string, new Array([j, j+length, "g"], [j+length, j+length+1, "r"], [i, i+length, "g"], [i+length, i+length+1, "r"])), searchBufferLength, lookaheadBufferLength, i, 4);
                             slidingWindow.innerHTML = generateColoredText(string, new Array([j, j+length, "g"], [j+length, j+length+1, "r"], [i, i+length, "g"], [i+length, i+length+1, "r"]));
                         } else {
                             // in case match reaches into lookahead buffer:
+                            //slidingWindow.innerHTML = displayBuffer(generateColoredText(string, new Array([j, j+length, "g"], [j+length, j+length+1, "r"], [j+length+1, i+length, "g"], [i+length, i+length+1, "r"])), searchBufferLength, lookaheadBufferLength, i, 4);
                             slidingWindow.innerHTML = generateColoredText(string, new Array([j, j+length, "g"], [j+length, j+length+1, "r"], [j+length+1, i+length, "g"], [i+length, i+length+1, "r"]));
                         }
                         await sleep(1000); 
@@ -146,19 +147,28 @@ async function decode(dictionary) {
         // append to string:
         if (length > 0) {
             const startGreen = decodedString.length - offset;
-            const startBlack = decodedString.length;
+            let startBlack = decodedString.length;
 
             for (let i = 0; i < length; i++) {
                 const index = decodedString.length - offset;
 
                 // color text and wait:
+                if (index + 1 > startBlack) {
+                    // in case match reached into lookahead buffer:
+                    startBlack = index + 1;
+                }
                 paragraph.innerHTML = generateColoredText(decodedString, new Array([startGreen, index+1, "g"], [startBlack, decodedString.length, "b"]));
                 await sleep(1000);
 
                 decodedString += decodedString.charAt(index);
 
                 // color text and wait:
-                paragraph.innerHTML = generateColoredText(decodedString, new Array([startGreen, index+1, "g"], [decodedString.length-(i+1), decodedString.length, "b"]));
+                startBlack = decodedString.length - (i + 1);
+                if (index + 1 > startBlack) {
+                    // in case match reached into lookahead buffer:
+                    startBlack = index + 1;
+                }
+                paragraph.innerHTML = generateColoredText(decodedString, new Array([startGreen, index+1, "g"], [startBlack, decodedString.length, "b"]));
                 await sleep(1000);
             }
         }
@@ -263,9 +273,19 @@ function generateColoredText(string, coloredSegments) {
     return coloredText + string.slice(lastEnd);
 }
 
-function displayBuffer(string, searchBufferLength, lookaheadBufferLength, index, spans) {
-    index = index + spans * 28;
-    searchBufferLength = searchBufferLength + spans * 28;
+function displayBuffer(string, searchBufferLength, lookaheadBufferLength, index, size) {
+
+    if (searchBufferLength > index) {
+        searchBufferLength = index;
+    }
+
+    // recalculate values using size:
+    let spans = size;
+    if (size > 1) {
+        spans = size/2;
+        index = index + spans * 28;
+        searchBufferLength = searchBufferLength + spans * 28;
+    }
     lookaheadBufferLength = lookaheadBufferLength + spans * 28;
 
     // get string segements:
@@ -323,9 +343,9 @@ decodeButton.disabled = true;
 
 
 // open/close legend:
-var modal = document.getElementById("legend");
-var legendButton = document.getElementById("legend-button");
-var closeLegend = document.getElementsByClassName("close")[0];
+let modal = document.getElementById("legend");
+let legendButton = document.getElementById("legend-button");
+let closeLegend = document.getElementsByClassName("close")[0];
 
 legendButton.onclick = function() {
   modal.style.display = "block";

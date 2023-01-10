@@ -72,29 +72,50 @@ button:disabled {
     font-size: 20px;
 }
 
+.input-color {
+    position: relative;
+    
+}
+
+.color-box {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    background-color: #ccc;
+    position: absolute;
+    left: 5px;
+    top: 5px;
+}
+
 .sb-background {
-    background-color: aqua;
+    background-color: #d1aeee;
+    border: 2px solid;
+    padding: 2px;
+    margin-left: 2px;
 }
 
 .lb-background {
-    background-color: blueviolet;
+    background-color: #80b8f8;
+    border: 2px solid;
+    padding: 2px;
+    margin-right: 2px;
 }
 
 .b-text {
     font-weight: bold;
-    font-size: 25px;
+    /*font-size: 25px;*/
 }
 
 .g-text {
     color: #009879;
     font-weight: bold;
-    font-size: 25px;
+    /*font-size: 25px;*/
 }
 
 .r-text {
     color: #bb1004;
     font-weight: bold;
-    font-size: 25px;
+    /*font-size: 25px;*/
 }
   
 .header {
