@@ -47,20 +47,34 @@
                     <div class="modal-header">
                         <span class="close">&times;</span>
                         <h2>Legende</h2>
-                      </div>
-                      <!--https://stackoverflow.com/questions/8433785/create-a-small-color-box-in-html-->
-                      <div class="modal-body">
-                        <div class="input-color">
-                            <p><b>Text Text Text</b></p>
-                            <div class="color-box" style="background-color: #FF850A;"></div>
-                        </div>                        
-                        <p><b>Grün: Übereinstimmung gefunden</b></p>
-                        <p><b>Rot: Zeichen stimmen nicht mehr überein</b></p>
-                        <p><b>Schwarz: Suche im Search Buffer / Neu hinzugefügtes Zeichen</b></p>
-                        <p><b>Graue Zeile in Tabelle: Aktueller Eintrag</b></p>
-                        <p><b>Blauer Hintergrund: Search Buffer</b></p>
-                        <p><b>Lila Hintergrund: Lookahead Buffer</b></p>
-                      </div>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="legend-entry">
+                            <p class="entry-text"><b>Suche im Search Buffer</b></p>
+                            <div class="color-box" style="background-color: black;"></div>
+                        </div>
+                        <div class="legend-entry">
+                            <p class="entry-text"><b>Übereinstimmende Zeichen</b></p>
+                            <div class="color-box" style="background-color: #009879;"></div>
+                        </div>
+                        <div class="legend-entry">
+                            <p class="entry-text"><b>Nicht übereinstimmende Zeichen</b></p>
+                            <div class="color-box" style="background-color: #bb1004;"></div>
+                        </div>
+                        <div class="legend-entry">
+                            <p class="entry-text"><b>Aktueller Eintrag im Dictionary</b></p>
+                            <div class="color-box" style="background-color: #909999a8;"></div>
+                        </div>
+                        <div class="legend-entry">
+                            <p class="entry-text"><b>Search Buffer</b></p>
+                            <div class="color-box" style="background-color: #d1aeee;"></div>
+                        </div>
+                        <div class="legend-entry">
+                            <p class="entry-text"><b>Lookahead Buffer</b></p>
+                            <div class="color-box" style="background-color: #80b8f8;"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

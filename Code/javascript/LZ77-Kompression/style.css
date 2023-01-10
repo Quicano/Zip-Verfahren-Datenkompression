@@ -72,19 +72,24 @@ button:disabled {
     font-size: 20px;
 }
 
-.input-color {
+.legend-entry {
     position: relative;
-    
+}
+
+.entry-text {
+    text-align: left; 
+    padding-left: 0.75cm;
 }
 
 .color-box {
-    width: 10px;
-    height: 10px;
+    width: 15px;
+    height: 15px;
     display: inline-block;
     background-color: #ccc;
     position: absolute;
-    left: 5px;
-    top: 5px;
+    left: 0px;
+    top: 0px;
+    border: 1px solid;
 }
 
 .sb-background {
