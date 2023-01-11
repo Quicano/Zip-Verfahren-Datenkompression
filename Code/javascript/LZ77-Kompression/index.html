@@ -1,40 +1,140 @@
 <!doctype html>
 <html lang="de">
+    
 <head>
     <meta charset="utf-8">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>LZ77 Demo Kit</title>
+    <meta name="description" content="Demo kit for demonstrating encoding and decoding of the LZ77 algorithm.">
+    <meta name="author" content="Tobias & Philipp">
+    <link rel="stylesheet" href="style.css">
+    <title>Demo-Kit: LZ77-Algorithmus</title>
 </head>
+
 <body>
+    <!-- header -->
+    <div class="header">
+        <h1>Demonstrations-Kit: LZ77-Algorithmus</h1>
+    </div>
 
-<div class="input">
-    <fieldset>
-        <label for="searchBuffer">Search Buffer:</label>
-        <input id="searchBuffer" type="text" placeholder="5">
+    <!-- user input div -->
+    <div>
+        <fieldset>
+            <legend><b>Eingabe:</b></legend>
 
-        <label for="lookaheadBuffer">Lookahead Buffer:</label>
-        <input id="lookaheadBuffer" type="text" placeholder="4">
+            <label for="search-buffer" style="background-color: #d1aeee;">Search Buffer:</label>
+            <input id="search-buffer" type="text" size="3" value="5" placeholder="5" pattern="[0-9]+" maxlength="4" class="number-input">
 
-        <label for="text">Text:</label>
-        <input id="text" type="text" placeholder="Gar nicht übel sprach der Dübel und verschwand in der Wand">
+            <label for="lookahead-buffer" style="background-color: #80b8f8;">Lookahead Buffer:</label>
+            <input id="lookahead-buffer" type="text" size="3" value="4" placeholder="4" pattern="[0-9]+" maxlength="4" class="number-input">
 
-        <button type="submit" class="pure-button">Start</button>
-    </fieldset>
-</div>
+            <label for="text">Text:</label>
+            <input id="text" type="text" size="30" list="suggestions" value="Blah blah blah!!" placeholder="Blah blah blah!!" maxlength="1000">
+                <datalist id="suggestions">
+                    <option value="Gar nicht übel sprach der Dübel und verschwand in der Wand.">
+                    <option value="aacaacabcabaaac">
+                    <option value="Blah blah blah!!">
+                    <option value="abracadabra!">
+                </datalist>
 
-<div class="output"> 
-    <fieldset>
-        <div class="slidingWindow">
-            <label>Sliding Window:</label>
-        </div>
-        <div class="dictionary">
-            <label>Dictionary:</label>
-        </div>
-    </fieldset>
-</div>
+            <button onclick="startEncoding()" id="encode-button">Komprimieren</button>
+            <button onclick="startDecoding()" id="decode-button" disabled>Dekomprimieren</button>
+            <button onclick="switchSpeed()" id="speed-button" style="width: 1cm;">1x</button>
+            <button onclick="fastForward()" id="fast-forward-button" style="width: 2.1cm;">Vorspulen</button>
+            <button id="legend-button">Legende</button>
 
+            <!-- legend div -->
+            <div id="legend" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span class="close">&times;</span>
+                        <h2>Legende</h2>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="legend-entry">
+                            <p class="entry-text"><b>Suche im Search Buffer</b></p>
+                            <div class="color-box" style="background-color: black;"></div>
+                        </div>
+                        <div class="legend-entry">
+                            <p class="entry-text"><b>Übereinstimmende Zeichen</b></p>
+                            <div class="color-box" style="background-color: #009879;"></div>
+                        </div>
+                        <div class="legend-entry">
+                            <p class="entry-text"><b>Nicht übereinstimmende Zeichen</b></p>
+                            <div class="color-box" style="background-color: #bb1004;"></div>
+                        </div>
+                        <div class="legend-entry">
+                            <p class="entry-text"><b>Aktueller Eintrag im Dictionary</b></p>
+                            <div class="color-box" style="background-color: #909999a8;"></div>
+                        </div>
+                        <div class="legend-entry">
+                            <p class="entry-text"><b>Search Buffer</b></p>
+                            <div class="color-box" style="background-color: #d1aeee;"></div>
+                        </div>
+                        <div class="legend-entry">
+                            <p class="entry-text"><b>Lookahead Buffer</b></p>
+                            <div class="color-box" style="background-color: #80b8f8;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </fieldset>
+    </div>
+
+    <!-- encoding div -->
+    <div> 
+        <fieldset id="encode-fieldset">
+            <legend><b>Kompression:</b></legend>
+
+            <div class="text">
+                <h3>Sliding Window:</h3>
+                <p id="sliding-window">Hier könnte Ihre Werbung stehen.</p>
+                <p id="encode-info" class="info">Offset: 0, Length: 0</p>
+            </div>
+
+            <div class="dictionary">
+                <h3>Dictionary:</h3>
+                <table id="dictionary-table-encode" class="styled-table">
+                    <thead>
+                        <tr>
+                          <th>Offset</th>
+                          <th>Length</th>
+                          <th>Symbol</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table> 
+            </div>
+        </fieldset>
+    </div>
+
+    <!-- decoding div -->
+    <div> 
+        <fieldset id="decode-fieldset">
+            <legend><b>Dekompression:</b></legend>
+
+            <div class="text">
+                <h3>Text:</h3>
+                <p id="decode-string">Hier könnte Ihre Werbung stehen.</p>
+            </div>
+
+            <div class="dictionary">
+                <h3>Dictionary:</h3>
+                <table id="dictionary-table-decode" class="styled-table">
+                    <thead>
+                        <tr>
+                          <th>Offset</th>
+                          <th>Length</th>
+                          <th>Symbol</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table> 
+            </div>
+        </fieldset>
+    </div>
 </body>
+
 </html>
 
-<script src="src/main.js"></script>
+<script src="code.js"></script>

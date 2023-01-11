@@ -4,6 +4,11 @@ package org.example.Encoding;
 import org.example.Util.Dictionary;
 import org.example.Util.Entry;
 
+<<<<<<< HEAD
+import javax.swing.*;
+
+=======
+>>>>>>> fc217a4333ce5b6c98d6d18bb2833921c3530cfb
 public class MatchFinder {
 
     public Dictionary lookForMatch(String s, int searchBufferLength, int lookaheadBufferLength){
@@ -11,6 +16,10 @@ public class MatchFinder {
         int i = 0;
         while(i < s.length()){
             char c = s.charAt(i);
+<<<<<<< HEAD
+
+=======
+>>>>>>> fc217a4333ce5b6c98d6d18bb2833921c3530cfb
             int j = i-1;
             int length = 1;
             boolean matchFound = false;
@@ -44,4 +53,56 @@ public class MatchFinder {
         }
         return dictionary;
     }
+<<<<<<< HEAD
+
+    public Dictionary encode(String string, int searchBufferLength, int lookaheadBufferLength) {
+        Dictionary dictionary = new Dictionary();
+        int i = 0;
+
+        // loop through string:
+        while (i < string.length()) {
+            char chr = string.charAt(i);
+            int offset = 0;
+            int maxLength = 0;
+            int j = i-1;
+
+            // go backwards through searchbuffer:
+            while (i-j <= searchBufferLength) {
+                if (j >= 0 && string.charAt(i) == string.charAt(j)) {
+                    int length = 1;
+
+                    // get length of match:
+                    while (length < lookaheadBufferLength && i+length < string.length()) {
+                        if (string.charAt(j+length) == string.charAt(i+length)) {
+                            length++;
+                        } else {
+                            break;
+                        }
+                    }
+
+                    // update if new best match:
+                    if (maxLength < length) {
+                        maxLength = length;
+                        offset = i-j;
+                        if (i+length < string.length()) {
+                            chr = string.charAt(i+length);
+                        } else {
+                            chr = ' ';
+                        }
+                    }
+                }
+                j--;
+            }
+            dictionary.addEntry(new Entry(offset, maxLength, chr));
+
+            if (maxLength == 0) {
+                i++;
+            } else {
+                i = i+maxLength;
+            }
+        }
+        return dictionary;
+    }
+=======
+>>>>>>> fc217a4333ce5b6c98d6d18bb2833921c3530cfb
 }
