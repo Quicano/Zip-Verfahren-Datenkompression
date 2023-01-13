@@ -198,10 +198,7 @@ function addToHTMLTable(entry) {
 
 async function startEncoding() {
     let encodeButton = document.getElementById("encode-button");
-
-    // disable buttons:
-    encodeButton.disabled = true;
-    decodeButton.disabled = true;
+    let info = document.getElementById("encode-info");
 
     // get input:
     let string = document.getElementById("text").value;
@@ -210,6 +207,12 @@ async function startEncoding() {
 
     // check if valid input:
     if (Number.isInteger(searchBufferLength) && searchBufferLength > 0 && Number.isInteger(lookaheadBufferLength) && lookaheadBufferLength > 0) {
+        info.style = "background-color: rgb(153, 153, 153)";
+
+        // disable buttons:
+        encodeButton.disabled = true;
+        decodeButton.disabled = true;
+        
         // clear table body:
         let table = document.getElementById("dictionary-table-encode");
         let tableBody = table.getElementsByTagName("tbody")[0];
@@ -221,8 +224,8 @@ async function startEncoding() {
         // encode:
         dictionary = await encode(string, searchBufferLength, lookaheadBufferLength);
 
-        let info = document.getElementById("encode-info");
-        info.innerHTML = "Original: " + string.length + ", Komprimiert: " + dictionary.getDictionary().length * 3 + ", Kompressionsrate: " + (string.length / (dictionary.getDictionary().length * 3)).toFixed(3) + ":1";
+        info.innerHTML = "Original: " + string.length + ", Komprimiert: " + dictionary.getDictionary().length * 3;
+        info.style = "background-color: #009879";
 
         // enable buttons:
         encodeButton.disabled = false;
@@ -360,3 +363,9 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 } 
+
+/* TODO:
+- Buffer für rote Buchstaben fixen
+- Andere Farbe für Buffer?
+- Gefärbte Buchstaben vergrößern?
+*/
