@@ -86,12 +86,12 @@ async function encode(string, searchBufferLength, lookaheadBufferLength) {
                     } else {
                         // color text and wait:
                         if (j + length < i) {
-                            //slidingWindow.innerHTML = displayBuffer(generateColoredText(string, new Array([j, j+length, "g"], [j+length, j+length+1, "r"], [i, i+length, "g"], [i+length, i+length+1, "r"])), searchBufferLength, lookaheadBufferLength, i, 4);
-                            slidingWindow.innerHTML = generateColoredText(string, new Array([j, j+length, "g"], [j+length, j+length+1, "r"], [i, i+length, "g"], [i+length, i+length+1, "r"]));
+                            slidingWindow.innerHTML = displayBuffer(generateColoredText(string, new Array([j, j+length, "g"], [j+length, j+length+1, "r"], [i, i+length, "g"], [i+length, i+length+1, "r"])), searchBufferLength, lookaheadBufferLength, i, 4);
+                            //slidingWindow.innerHTML = generateColoredText(string, new Array([j, j+length, "g"], [j+length, j+length+1, "r"], [i, i+length, "g"], [i+length, i+length+1, "r"]));
                         } else {
                             // in case match reaches into lookahead buffer:
-                            //slidingWindow.innerHTML = displayBuffer(generateColoredText(string, new Array([j, j+length, "g"], [j+length, j+length+1, "r"], [j+length+1, i+length, "g"], [i+length, i+length+1, "r"])), searchBufferLength, lookaheadBufferLength, i, 4);
-                            slidingWindow.innerHTML = generateColoredText(string, new Array([j, j+length, "g"], [j+length, j+length+1, "r"], [j+length+1, i+length, "g"], [i+length, i+length+1, "r"]));
+                            slidingWindow.innerHTML = displayBuffer(generateColoredText(string, new Array([j, j+length, "g"], [j+length, j+length+1, "r"], [j+length+1, i+length, "g"], [i+length, i+length+1, "r"])), searchBufferLength, lookaheadBufferLength, i, 4);
+                            //slidingWindow.innerHTML = generateColoredText(string, new Array([j, j+length, "g"], [j+length, j+length+1, "r"], [j+length+1, i+length, "g"], [i+length, i+length+1, "r"]));
                         }
                         await sleep(1000); 
 
@@ -128,7 +128,7 @@ async function encode(string, searchBufferLength, lookaheadBufferLength) {
             i = i+maxLength+1;
         }
     }
-    slidingWindow.innerHTML = string;
+    slidingWindow.innerHTML = string.replace(/\u2423/g, ' ');
     return dictionary;
 }
 
@@ -181,7 +181,7 @@ async function decode(dictionary) {
         tableRows[e+1].style.backgroundColor = "";
     }
     // display final string:
-    paragraph.innerHTML = decodedString;
+    paragraph.innerHTML = decodedString.replace(/\u2423/g, ' ');
 
     return decodedString;
 }
@@ -201,7 +201,7 @@ async function startEncoding() {
     let info = document.getElementById("encode-info");
 
     // get input:
-    let string = document.getElementById("text").value;
+    let string = document.getElementById("text").value.replace(/\s/g, '\u2423');
     let searchBufferLength = Number(document.getElementById("search-buffer").value);
     let lookaheadBufferLength = Number(document.getElementById("lookahead-buffer").value);
 
@@ -270,7 +270,7 @@ function generateColoredText(string, coloredSegments) {
         const color = coloredSegments[i][2];
 
         // wrap segements with span elements:
-        coloredText += string.slice(lastEnd, begin) + "<span class='" + color + "-text'>" + string.replace(/\s/g, '_').slice(begin, end) + "</span>";
+        coloredText += string.slice(lastEnd, begin) + "<span class='" + color + "-text'>" + string.slice(begin, end) + "</span>";
         lastEnd = end;
     }
     return coloredText + string.slice(lastEnd);
@@ -365,7 +365,5 @@ window.onclick = function(event) {
 } 
 
 /* TODO:
-- Buffer für rote Buchstaben fixen
-- Andere Farbe für Buffer?
-- Gefärbte Buchstaben vergrößern?
+- Scrollbar Tabelle?
 */

@@ -1,6 +1,6 @@
 body {
     font-family: sans-serif;
-    max-width: 1150px;
+    max-width: 1200px;
     margin: auto;
     margin-bottom: 25px;
 }
@@ -71,12 +71,14 @@ button:disabled {
     font-size: 20px;
     overflow-wrap: anywhere;
     line-height: 35px;
+    font-family: monospace;
 }
 
 #decode-string {
     font-size: 20px;
     overflow-wrap: anywhere;
     line-height: 35px;
+    font-family: monospace;
 }
 
 .legend-entry {
@@ -115,18 +117,21 @@ button:disabled {
 
 .b-text {
     font-weight: bold;
+    text-decoration-line: underline;
     /*font-size: 25px;*/
 }
 
 .g-text {
     color: #009879;
     font-weight: bold;
+    text-decoration-line: underline;
     /*font-size: 25px;*/
 }
 
 .r-text {
     color: #bb1004;
     font-weight: bold;
+    text-decoration-line: underline;
     /*font-size: 25px;*/
 }
   
@@ -179,10 +184,6 @@ button:disabled {
 
 .styled-table tbody tr:nth-of-type(even) {
     background-color: #f3f3f3;
-}
-
-#legend-button {
-    margin-left: 10px;
 }
 
 .modal {
