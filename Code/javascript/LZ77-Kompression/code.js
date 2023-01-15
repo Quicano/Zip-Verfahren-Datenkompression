@@ -86,12 +86,10 @@ async function encode(string, searchBufferLength, lookaheadBufferLength) {
                     } else {
                         // color text and wait:
                         if (j + length < i) {
-                            //slidingWindow.innerHTML = displayBuffer(generateColoredText(string, new Array([j, j+length, "g"], [j+length, j+length+1, "r"], [i, i+length, "g"], [i+length, i+length+1, "r"])), searchBufferLength, lookaheadBufferLength, i, 4);
-                            slidingWindow.innerHTML = generateColoredText(string, new Array([j, j+length, "g"], [j+length, j+length+1, "r"], [i, i+length, "g"], [i+length, i+length+1, "r"]));
+                            slidingWindow.innerHTML = displayBuffer(generateColoredText(string, new Array([j, j+length, "g"], [j+length, j+length+1, "r"], [i, i+length, "g"], [i+length, i+length+1, "r"])), searchBufferLength, lookaheadBufferLength, i, 4);
                         } else {
                             // in case match reaches into lookahead buffer:
-                            //slidingWindow.innerHTML = displayBuffer(generateColoredText(string, new Array([j, j+length, "g"], [j+length, j+length+1, "r"], [j+length+1, i+length, "g"], [i+length, i+length+1, "r"])), searchBufferLength, lookaheadBufferLength, i, 4);
-                            slidingWindow.innerHTML = generateColoredText(string, new Array([j, j+length, "g"], [j+length, j+length+1, "r"], [j+length+1, i+length, "g"], [i+length, i+length+1, "r"]));
+                            slidingWindow.innerHTML = displayBuffer(generateColoredText(string, new Array([j, j+length, "g"], [j+length, j+length+1, "r"], [j+length+1, i+length, "g"], [i+length, i+length+1, "r"])), searchBufferLength, lookaheadBufferLength, i, 4);
                         }
                         await sleep(1000); 
 
@@ -118,6 +116,7 @@ async function encode(string, searchBufferLength, lookaheadBufferLength) {
 
         // add to html table and wait:
         addToHTMLTable(new Entry(offset, maxLength, char));
+        tableRows[tableRows.length-1].scrollIntoView(options2);
         tableRows[tableRows.length-1].style.backgroundColor = tableRowBorder;
         await sleep(1000);
         tableRows[tableRows.length-1].style.backgroundColor = "";
@@ -128,7 +127,7 @@ async function encode(string, searchBufferLength, lookaheadBufferLength) {
             i = i+maxLength+1;
         }
     }
-    slidingWindow.innerHTML = string;
+    slidingWindow.innerHTML = string.replace(/\u2423/g, ' ');
     return dictionary;
 }
 
@@ -142,7 +141,8 @@ async function decode(dictionary) {
         let length = dictionary[e].getLength();
         let char = dictionary[e].getNextSymbol();
 
-        tableRows[e+1].style.backgroundColor = tableRowBorder;
+        tableRows[e+1].scrollIntoView(options2);
+        tableRows[e + 1].style.backgroundColor = tableRowBorder;
         
         // append to string:
         if (length > 0) {
@@ -181,7 +181,7 @@ async function decode(dictionary) {
         tableRows[e+1].style.backgroundColor = "";
     }
     // display final string:
-    paragraph.innerHTML = decodedString;
+    paragraph.innerHTML = decodedString.replace(/\u2423/g, ' ');
 
     return decodedString;
 }
@@ -198,18 +198,21 @@ function addToHTMLTable(entry) {
 
 async function startEncoding() {
     let encodeButton = document.getElementById("encode-button");
-
-    // disable buttons:
-    encodeButton.disabled = true;
-    decodeButton.disabled = true;
+    let info = document.getElementById("encode-info");
 
     // get input:
-    let string = document.getElementById("text").value;
+    let string = document.getElementById("text").value.replace(/\s/g, '\u2423');
     let searchBufferLength = Number(document.getElementById("search-buffer").value);
     let lookaheadBufferLength = Number(document.getElementById("lookahead-buffer").value);
 
     // check if valid input:
     if (Number.isInteger(searchBufferLength) && searchBufferLength > 0 && Number.isInteger(lookaheadBufferLength) && lookaheadBufferLength > 0) {
+        info.style = "background-color: rgb(153, 153, 153)";
+
+        // disable buttons:
+        encodeButton.disabled = true;
+        decodeButton.disabled = true;
+        
         // clear table body:
         let table = document.getElementById("dictionary-table-encode");
         let tableBody = table.getElementsByTagName("tbody")[0];
@@ -221,8 +224,8 @@ async function startEncoding() {
         // encode:
         dictionary = await encode(string, searchBufferLength, lookaheadBufferLength);
 
-        let info = document.getElementById("encode-info");
-        info.innerHTML = "Original: " + string.length + ", Komprimiert: " + dictionary.getDictionary().length * 3 + ", Kompressionsrate: " + (string.length / (dictionary.getDictionary().length * 3)).toFixed(3) + ":1";
+        info.innerHTML = "Original: " + string.length + ", Komprimiert: " + dictionary.getDictionary().length * 3;
+        info.style = "background-color: #009879";
 
         // enable buttons:
         encodeButton.disabled = false;
@@ -267,7 +270,7 @@ function generateColoredText(string, coloredSegments) {
         const color = coloredSegments[i][2];
 
         // wrap segements with span elements:
-        coloredText += string.slice(lastEnd, begin) + "<span class='" + color + "-text'>" + string.replace(/\s/g, '_').slice(begin, end) + "</span>";
+        coloredText += string.slice(lastEnd, begin) + "<span class='" + color + "-text'>" + string.slice(begin, end) + "</span>";
         lastEnd = end;
     }
     return coloredText + string.slice(lastEnd);
@@ -325,6 +328,18 @@ function switchSpeed() {
     document.getElementById("speed-button").textContent = speed + "x";
 }
 
+function toggleTables() {
+    let className = document.getElementById("tableContainer").classList;
+
+    if (className.contains("tableContainer")) {
+        className.remove("tableContainer");
+        className.add("tableContainerOff");
+    } else {
+        className.remove("tableContainerOff");
+        className.add("tableContainer");
+    }
+}
+
 function sleep(ms) {
     // wait for ms / speed-button input:
     return new Promise(resolve => setTimeout(resolve, ms / speed));
@@ -335,7 +350,8 @@ let dictionary;
 let decodeButton = document.getElementById("decode-button");
 let speed = 1.0;
 let securedSpeed;
-const options = { behavior: "smooth" };
+const options = { behavior: 'smooth' };
+const options2 = { behavior: 'smooth', block: 'nearest' };
 const tableRowBorder = "#909999a8";
 
 // disable decode button at start:
@@ -360,3 +376,7 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 } 
+
+/* TODO:
+- Scrollbar Tabelle?
+*/

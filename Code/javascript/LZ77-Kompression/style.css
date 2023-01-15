@@ -1,6 +1,6 @@
 body {
     font-family: sans-serif;
-    max-width: 1150px;
+    max-width: 1200px;
     margin: auto;
     margin-bottom: 25px;
 }
@@ -58,18 +58,27 @@ button:disabled {
 
 .info {
     margin: auto;
-    border: 2px solid;
+    font-weight: bold;
     width: 40%;
     text-align: center;
+    background-color: rgb(153, 153, 153);
+    color: #ffffff;
+    padding: 5px 0px;
+    font-size: 0.9em;
 }
 
 #sliding-window {
     font-size: 20px;
     overflow-wrap: anywhere;
+    line-height: 35px;
+    font-family: monospace;
 }
 
 #decode-string {
     font-size: 20px;
+    overflow-wrap: anywhere;
+    line-height: 35px;
+    font-family: monospace;
 }
 
 .legend-entry {
@@ -108,18 +117,21 @@ button:disabled {
 
 .b-text {
     font-weight: bold;
+    text-decoration-line: underline;
     /*font-size: 25px;*/
 }
 
 .g-text {
     color: #009879;
     font-weight: bold;
+    text-decoration-line: underline;
     /*font-size: 25px;*/
 }
 
 .r-text {
     color: #bb1004;
     font-weight: bold;
+    text-decoration-line: underline;
     /*font-size: 25px;*/
 }
   
@@ -147,11 +159,22 @@ button:disabled {
     width: 50%;
 }
 
+.tableContainer {
+    overflow-y: scroll;
+    height: 200px;
+    min-width: 400px;
+    margin: 25px 75px;
+}
+
+.tableContainerOff {
+    min-width: 400px;
+    margin: 25px 75px;
+}
+
 .styled-table {
     border-collapse: collapse;
-    margin: 25px 75px;
     font-size: 0.9em;
-    min-width: 400px;
+    width: 100%;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
@@ -159,6 +182,8 @@ button:disabled {
     background-color: #009879;
     color: #ffffff;
     text-align: center;
+    position: sticky; 
+    top: 0px; 
 }
 
 .styled-table th,
@@ -172,10 +197,6 @@ button:disabled {
 
 .styled-table tbody tr:nth-of-type(even) {
     background-color: #f3f3f3;
-}
-
-#legend-button {
-    margin-left: 10px;
 }
 
 .modal {
