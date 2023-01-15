@@ -226,6 +226,7 @@ async function startEncoding() {
 
         info.innerHTML = "Original: " + string.length + ", Komprimiert: " + dictionary.getDictionary().length * 3;
         info.style = "background-color: #009879";
+        skip = false;
 
         // enable buttons:
         encodeButton.disabled = false;
@@ -254,6 +255,7 @@ async function startDecoding() {
 
     // decode:
     await decode(dictionary.getDictionary());
+    skip = false;
 
     // enable button:
     decodeButton.disabled = false;
@@ -328,9 +330,17 @@ function switchSpeed() {
     document.getElementById("speed-button").textContent = speed + "x";
 }
 
+function finishNow() {
+    skip = true
+}
+
 function sleep(ms) {
-    // wait for ms / speed-button input:
-    return new Promise(resolve => setTimeout(resolve, ms / speed));
+    if (skip) {
+        return null;
+    } else {
+        // wait for ms / speed-button input:
+        return new Promise(resolve => setTimeout(resolve, ms / speed));
+    }
 }
 
 // global variables:
@@ -338,6 +348,7 @@ let dictionary;
 let decodeButton = document.getElementById("decode-button");
 let speed = 1.0;
 let securedSpeed;
+let skip = false;
 const options = { behavior: "smooth" };
 const tableRowBorder = "#909999a8";
 
