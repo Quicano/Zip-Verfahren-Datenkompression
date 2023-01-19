@@ -1,38 +1,20 @@
-class Entry {
+// global variables:
+let dictionary;
+let decodeButton = document.getElementById("decode-button");
+let encodeButton = document.getElementById("encode-button");
+let speed = 1.0;
+let securedSpeed;
+let skip = false;
+const options = { behavior: "smooth" };
+const tableRowBorder = "#909999a8";
 
-    constructor(offset, length, nextSymbol) {
-      this.offset = offset;
-      this.len = length;
-      this.nextSymbol = nextSymbol;
-    }
+// open/close legend:
+let modal = document.getElementById("legend");
+let legendButton = document.getElementById("legend-button");
+let closeLegend = document.getElementsByClassName("close")[0];
 
-    getOffset() {
-        return this.offset;
-    }
-
-    getLength() {
-        return this.len;
-    }
-
-    getNextSymbol() {
-        return this.nextSymbol;
-    }
-}
-
-class Dictionary {
-
-    constructor(){
-        this.dictionary = new Array();
-    }
-
-    addEntry(entry){
-        this.dictionary.push(entry);
-    }
-
-    getDictionary() {
-        return this.dictionary;
-    }
-}
+// disable decode button at start:
+decodeButton.disabled = true;
 
 async function encode(string, searchBufferLength, lookaheadBufferLength) {
     let dictionary = new Dictionary();
@@ -197,7 +179,6 @@ function addToHTMLTable(entry) {
 }
 
 async function startEncoding() {
-    let encodeButton = document.getElementById("encode-button");
     let info = document.getElementById("encode-info");
 
     // get input:
@@ -343,23 +324,6 @@ function sleep(ms) {
     }
 }
 
-// global variables:
-let dictionary;
-let decodeButton = document.getElementById("decode-button");
-let speed = 1.0;
-let securedSpeed;
-let skip = false;
-const options = { behavior: "smooth" };
-const tableRowBorder = "#909999a8";
-
-// disable decode button at start:
-decodeButton.disabled = true;
-
-
-// open/close legend:
-let modal = document.getElementById("legend");
-let legendButton = document.getElementById("legend-button");
-let closeLegend = document.getElementsByClassName("close")[0];
 
 legendButton.onclick = function() {
   modal.style.display = "block";
