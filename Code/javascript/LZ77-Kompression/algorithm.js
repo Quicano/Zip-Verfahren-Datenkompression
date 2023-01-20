@@ -1,7 +1,6 @@
 async function encode(string, searchBufferLength, lookaheadBufferLength) {
     let dictionary = new Dictionary();
     let i = 0;
-
     let slidingWindow = document.getElementById("sliding-window");
     let info = document.getElementById("encode-info");
     let tableRows = document.getElementById("dictionary-table-encode").rows;
