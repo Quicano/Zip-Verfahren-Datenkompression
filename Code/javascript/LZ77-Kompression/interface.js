@@ -8,13 +8,27 @@ let skip = false;
 const options = { behavior: "smooth" };
 const tableRowBorder = "#909999a8";
 
+// disable decode button at start:
+decodeButton.disabled = true;
+
 // open/close legend:
 let modal = document.getElementById("legend");
 let legendButton = document.getElementById("legend-button");
 let closeLegend = document.getElementsByClassName("close")[0];
 
-// disable decode button at start:
-decodeButton.disabled = true;
+legendButton.onclick = function() {
+    modal.style.display = "block";
+}
+  
+closeLegend.onclick = function() {
+    modal.style.display = "none";
+}
+  
+window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+} 
 
 async function encode(string, searchBufferLength, lookaheadBufferLength) {
     let dictionary = new Dictionary();
@@ -69,11 +83,10 @@ async function encode(string, searchBufferLength, lookaheadBufferLength) {
                         // color text and wait:
                         if (j + length < i) {
                             slidingWindow.innerHTML = displayBuffer(generateColoredText(string, new Array([j, j+length, "g"], [j+length, j+length+1, "r"], [i, i+length, "g"], [i+length, i+length+1, "r"])), searchBufferLength, lookaheadBufferLength, i, 4);
-                            //slidingWindow.innerHTML = generateColoredText(string, new Array([j, j+length, "g"], [j+length, j+length+1, "r"], [i, i+length, "g"], [i+length, i+length+1, "r"]));
                         } else {
                             // in case match reaches into lookahead buffer:
-                            slidingWindow.innerHTML = displayBuffer(generateColoredText(string, new Array([j, j+length, "g"], [j+length, j+length+1, "r"], [j+length+1, i+length, "g"], [i+length, i+length+1, "r"])), searchBufferLength, lookaheadBufferLength, i, 4);
-                            //slidingWindow.innerHTML = generateColoredText(string, new Array([j, j+length, "g"], [j+length, j+length+1, "r"], [j+length+1, i+length, "g"], [i+length, i+length+1, "r"]));
+                            //slidingWindow.innerHTML = displayBuffer(generateColoredText(string, new Array([j, j + length, "g"], [j + length, j + length + 1, "r"], [j + length + 1, i + length, "g"], [i + length, i + length + 1, "r"])), searchBufferLength, lookaheadBufferLength, i, 4);
+                            slidingWindow.innerHTML = generateColoredText(string, new Array([j, j+length, "g"], [j+length, j+length+1, "r"], [j+length+1, i+length, "g"], [i+length, i+length+1, "r"]));
                         }
                         await sleep(1000); 
 
@@ -179,6 +192,7 @@ function addToHTMLTable(entry) {
 }
 
 async function startEncoding() {
+    skip = false;
     let info = document.getElementById("encode-info");
 
     // get input:
@@ -217,6 +231,8 @@ async function startEncoding() {
 }
 
 async function startDecoding() {
+    skip = false;
+
     // disable button:
     decodeButton.disabled = true;
 
@@ -323,22 +339,3 @@ function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms / speed));
     }
 }
-
-
-legendButton.onclick = function() {
-  modal.style.display = "block";
-}
-
-closeLegend.onclick = function() {
-  modal.style.display = "none";
-}
-
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-} 
-
-/* TODO:
-- Scrollbar Tabelle?
-*/
