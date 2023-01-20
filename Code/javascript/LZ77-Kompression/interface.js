@@ -85,8 +85,7 @@ async function encode(string, searchBufferLength, lookaheadBufferLength) {
                             slidingWindow.innerHTML = displayBuffer(generateColoredText(string, new Array([j, j+length, "g"], [j+length, j+length+1, "r"], [i, i+length, "g"], [i+length, i+length+1, "r"])), searchBufferLength, lookaheadBufferLength, i, 4);
                         } else {
                             // in case match reaches into lookahead buffer:
-                            //slidingWindow.innerHTML = displayBuffer(generateColoredText(string, new Array([j, j + length, "g"], [j + length, j + length + 1, "r"], [j + length + 1, i + length, "g"], [i + length, i + length + 1, "r"])), searchBufferLength, lookaheadBufferLength, i, 4);
-                            slidingWindow.innerHTML = generateColoredText(string, new Array([j, j+length, "g"], [j+length, j+length+1, "r"], [j+length+1, i+length, "g"], [i+length, i+length+1, "r"]));
+                            slidingWindow.innerHTML = displayBuffer(generateColoredText(string, new Array([j, i, "g"], [i, j+length, "g"], [j+length, j+length+1, "r"], [j+length+1, i+length, "g"], [i+length, i+length+1, "r"])), searchBufferLength, lookaheadBufferLength, i, 5);
                         }
                         await sleep(1000); 
 
@@ -103,8 +102,8 @@ async function encode(string, searchBufferLength, lookaheadBufferLength) {
                     } else {
                         char = "Ende";
                     }
+                    info.innerHTML = "Offset: " + offset + ", Length: " + maxLength;
                 }
-                info.innerHTML = "Offset: " + offset + ", Length: " + maxLength;
             }
             j--; 
         }
@@ -283,10 +282,14 @@ function displayBuffer(string, searchBufferLength, lookaheadBufferLength, index,
 
     // recalculate values using size:
     let spans = size;
-    if (size > 1) {
+    if (size == 2 || size == 4) {
         spans = size/2;
         index = index + spans * 28;
         searchBufferLength = searchBufferLength + spans * 28;
+    } else if (size == 5) {
+        spans = 4
+        index = index + 1 * 28;
+        searchBufferLength = searchBufferLength + 1 * 28;
     }
     lookaheadBufferLength = lookaheadBufferLength + spans * 28;
 
