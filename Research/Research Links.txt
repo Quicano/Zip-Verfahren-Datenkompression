@@ -9,6 +9,7 @@ https://www.uni-trier.de/fileadmin/fb4/prof/INF/TIN/Folien/DK/ss_2013/vorlesung0
 https://www.pcwelt.de/article/1147110/komprimierung_-_die_mechanismen_hinter_zips-platz_sparen.html
 https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-wusp/fb98aa28-5cd7-407f-8869-a6cef1ff1ccb
 https://cs.stanford.edu/people/eroberts/courses/soco/projects/data-compression/lossless/lz77/shortcoming.htm
+https://tcs.rwth-aachen.de/lehre/Komprimierung/SS2012/ausarbeitungen/Lempel-Ziv.pdf
 https://dewiki.de/Lexikon/LZ77
 http://jbg.swznet.de/uni/lzw-ausarbeitung.pdf
 
