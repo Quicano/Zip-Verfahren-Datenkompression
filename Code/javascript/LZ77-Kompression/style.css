@@ -59,12 +59,13 @@ button:disabled {
 .info {
     margin: auto;
     font-weight: bold;
-    width: 40%;
+    width: 50%;
     text-align: center;
     background-color: rgb(153, 153, 153);
     color: #ffffff;
     padding: 5px 0px;
     font-size: 0.9em;
+    margin-bottom: 5px;
 }
 
 #sliding-window {

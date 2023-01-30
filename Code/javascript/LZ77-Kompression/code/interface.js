@@ -43,6 +43,7 @@ function addToHTMLTable(entry) {
 async function startEncoding() {
     skip = false;
     let info = document.getElementById("encode-info");
+    let ratio = document.getElementById("compression-ratio");
 
     // get input:
     let string = document.getElementById("text").value.replace(/\s/g, '\u2423');
@@ -52,6 +53,8 @@ async function startEncoding() {
     // check if valid input:
     if (Number.isInteger(searchBufferLength) && searchBufferLength > 0 && Number.isInteger(lookaheadBufferLength) && lookaheadBufferLength > 0) {
         info.style = "background-color: rgb(153, 153, 153)";
+        ratio.classList.remove("info");
+        ratio.innerHTML = "";
 
         // disable buttons:
         encodeButton.disabled = true;
@@ -68,8 +71,19 @@ async function startEncoding() {
         // encode:
         dictionary = await encode(string, searchBufferLength, lookaheadBufferLength);
 
-        info.innerHTML = "Original: " + string.length + ", Komprimiert: " + dictionary.getDictionary().length * 3;
+        // calculate bit size of input and output:
+        const entrySize = Math.ceil(getBaseLog(2, searchBufferLength)) + Math.ceil(getBaseLog(2, lookaheadBufferLength)) + 8;
+
+        const inputBitSize = string.length * 8;
+        const outputBitSize = dictionary.getDictionary().length * entrySize;
+
+        info.innerHTML = "Input: " + inputBitSize + " Bits, Output: " + outputBitSize + " Bits";
         info.style = "background-color: #009879";
+
+        ratio.classList.add("info");
+        ratio.style = "background-color: #009879";
+        ratio.innerHTML = "Einsparung: " + (100 - (outputBitSize * 100) / inputBitSize).toFixed(2) + " %";
+
         skip = false;
 
         // enable buttons:
@@ -77,6 +91,10 @@ async function startEncoding() {
         decodeButton.disabled = false;
         
     }
+}
+
+function getBaseLog(x, y) {
+    return Math.log(y) / Math.log(x);
 }
 
 async function startDecoding() {
