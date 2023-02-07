@@ -4,4 +4,4 @@ In diesem Kit präsentieren wir den LZ77-Algorithmus und zeigen Funktionsweise u
 
 Um das Demo-Kit zu starten muss die Code/javascript/LZ77-Kompression/ heruntergeladen und die index.html gestartet werden 
 
-Weitere Infos über den LZ77-Algorithmus findet man im Presentation-Ordner in der Dokumentation und der PowerPoint-Präsentation
+Weitere Infos über den LZ77-Algorithmus findet man im Dokumentation-Ordner in der Dokumentation und der PowerPoint-Präsentation
