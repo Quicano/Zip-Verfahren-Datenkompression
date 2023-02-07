@@ -1,13 +1,7 @@
-# Zip-Verfahren-Datenkompression
-Seminar Datenkompression: Thema Zip-Verfahren mit LZ77-Algorithmus
+Datenkompression: LZ77-Algorithmus 
 
-ToDo:
+In diesem Kit präsentieren wir den LZ77-Algorithmus und zeigen Funktionsweise und Logik hinter dem Algorithmus. 
 
-1. Dokumentation
+Um das Demo-Kit zu starten muss die Code/javascript/LZ77-Kompression/ heruntergeladen und die index.html gestartet werden 
 
-2. Präsentation
-
-3. Demonstration Kid/Code
-
-Link zu Overleaf:
-https://de.overleaf.com/project/6360d89f8877103761ef5825
+Weitere Infos über den LZ77-Algorithmus findet man im Presentation-Ordner in der Dokumentation und der PowerPoint-Präsentation
